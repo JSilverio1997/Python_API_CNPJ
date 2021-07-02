@@ -13,7 +13,7 @@ class CrudCnpj(ConexaoDatabase):
                   f"  WHERE REPLACE(REPLACE(REPLACE(CNPJ, '.', ''),'-', ''), '/', '') " \
                   f"  = '{Cnpj.desformat_cnpj(cnpj)}';"
 
-            print(sql)
+            # print(sql)
             self.cursor.execute(sql)
 
             id_cnpj = self.cursor.fetchone()
@@ -78,13 +78,30 @@ class CrudCnpj(ConexaoDatabase):
                   f" FROM CNPJ " \
                   f"  WHERE ID_CNPJ = {id_cnpj};"
 
-            print(sql)
+            # print(sql)
             self.cursor.execute(sql)
 
-            datas = self.cursor.fetchall()
+            datas = self.cursor.fetchone()
 
             if datas is not None:
-                return datas
+                dict_datas_cnpj = {'nome': datas[1],
+                                   'cnpj': datas[0],
+                                   'atividade_principal': datas[2],
+                                   'text': datas[3],
+                                   'situacao': datas[4],
+                                   'data_situacao': datas[5],
+                                   'status': datas[6],
+                                   'tipo': datas[7],
+                                   'logradouro': datas[8],
+                                   'numero': datas[9],
+                                   'bairro': datas[10],
+                                   'cep': datas[11],
+                                   'municipio': datas[12],
+                                   'porte': datas[13],
+                                   'abertura': datas[14],
+                                   'natureza_juridica': datas[15],
+                                   'telefone': datas[16]}
+                return dict_datas_cnpj
 
             else:
                 return None
